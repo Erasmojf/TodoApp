@@ -10,15 +10,17 @@ import CoreData
 
 struct ContentView: View {
     // MARK: - PROPERTIES
+
     @State private var showingAddTodoView: Bool = false
     @Environment(\.managedObjectContext) private var viewContext
+   
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
     
-   // MARK: - BODY
+   // MARK: - BODY        
     var body: some View {
         NavigationView {
             List (0 ..< 5 ) { item in
@@ -32,7 +34,7 @@ struct ContentView: View {
                 Image(systemName: "plus")
              }//: Add Button
              .sheet(isPresented: $showingAddTodoView) {
-                AdTodoView()
+                AdTodoView().environment(\.managedObjectContext, self.viewContext)
             }
          )
         }//NAVIGATIONVIEW
